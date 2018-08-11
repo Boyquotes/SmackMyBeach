@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/beach.png" type="Texture" id=3]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://LaMouette.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/beach.png" type="Texture" id=4]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Curve2D" id=1]
 
@@ -12,17 +13,23 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 640, 0, 0, 0, 0, 0, 640, 480, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 0 )
 }
 
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 17.8156, 14.5895 )
+
 [node name="Beach" type="Node2D"]
 
 script = ExtResource( 1 )
 Gertrude = ExtResource( 2 )
+LaMouette = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 position = Vector2( 320.222, 240.089 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
-[node name="Player" parent="." index="1" instance=ExtResource( 4 )]
+[node name="Player" parent="." index="1" instance=ExtResource( 5 )]
 
 [node name="GertrudeTimer" type="Timer" parent="." index="2"]
 
@@ -46,6 +53,65 @@ cubic_interp = true
 loop = true
 lookahead = 4.0
 
+[node name="Emplacement" type="Area2D" parent="." index="4"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement" index="0"]
+
+position = Vector2( 30.8545, 16.8648 )
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Emplacement2" type="Area2D" parent="." index="5"]
+
+position = Vector2( -42.5711, 109.876 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement2" index="0"]
+
+position = Vector2( 89.5979, 74.419 )
+shape = SubResource( 2 )
+
+[node name="Emplacement3" type="Area2D" parent="." index="6"]
+
+position = Vector2( 160.058, 87.2826 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement3" index="0"]
+
+position = Vector2( -106.999, 18.0282 )
+shape = SubResource( 2 )
+
+[connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
+
+[connection signal="stopLaMouette" from="." to="." method="_on_Beach_stopLaMouette"]
+
 [connection signal="timeout" from="GertrudeTimer" to="." method="_on_GertrudeTimer_timeout"]
+
+[connection signal="area_entered" from="Emplacement" to="." method="_on_Emplacement_area_entered"]
+
+[connection signal="area_entered" from="Emplacement2" to="." method="_on_Emplacement2_area_entered"]
+
+[connection signal="area_entered" from="Emplacement3" to="." method="_on_Emplacement3_area_entered"]
 
 
