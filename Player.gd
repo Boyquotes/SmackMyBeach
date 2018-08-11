@@ -26,6 +26,8 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("ui_down"):
 		motion.y = SPEED
 		$PlayerSpr.play("walk")
+	elif Input.is_action_pressed("ui_attack"):
+			print("on attaque")
 	else:
 		motion.x = 0
 		#$PlayerSpr.flip_h = false
@@ -35,3 +37,8 @@ func _physics_process(delta):
 	position.x = clamp(position.x, 0, screensize.x-64)
 	position.y = clamp(position.y, 0, screensize.y-64)
 	move_and_slide(motion)
+
+func _on_Area2D_area_entered(area):
+	print("dans mon espace")
+	area.queue_free()
+	pass # replace with function body

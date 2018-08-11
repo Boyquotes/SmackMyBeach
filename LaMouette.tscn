@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Gertrude.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprite_png/maillotrougeallongee.png" type="Texture" id=2]
-[ext_resource path="res://assets/sprite_png/maillotrougesexyquimarche1.png" type="Texture" id=3]
-[ext_resource path="res://assets/sprite_png/maillotrougesexyquimarche2.png" type="Texture" id=4]
+[ext_resource path="res://LaMouette.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprite_png/mouette1.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprite_png/mouette2.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprite_png/mouette3.png" type="Texture" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -15,17 +15,19 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "walk",
+"name": "vol",
 "speed": 5.0
 } ]
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 29.8865, 30.4596 )
+extents = Vector2( 8.83184, 7.63304 )
 
-[node name="Gertrude" type="Area2D"]
+[node name="LaMouette" type="Area2D"]
 
+modulate = Color( 1, 0.956118, 0.94986, 1 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -34,21 +36,21 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
-_sections_unfolded = [ "Visibility" ]
-MIN_SPEED = 50
-MAX_SPEED = 100
-MOVE_SPEED = 50
+_sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pause", "Pickable", "Visibility" ]
+MIN_SPEED = 5
+MAX_SPEED = 10
+MOVE_SPEED = 75
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="0"]
 
 frames = SubResource( 1 )
-animation = "idle"
+animation = "vol"
 centered = false
-_sections_unfolded = [ "Offset", "Transform" ]
+_sections_unfolded = [ "Material", "Offset", "Transform", "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( 32, 32 )
+position = Vector2( 9.24828, 9.24827 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
 
