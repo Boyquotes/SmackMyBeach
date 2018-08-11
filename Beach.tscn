@@ -1,12 +1,51 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/beach.png" type="Texture" id=3]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Curve2D" id=1]
+
+bake_interval = 5.0
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 640, 0, 0, 0, 0, 0, 640, 480, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 0 )
+}
 
 [node name="Beach" type="Node2D"]
 
-[node name="Player" parent="." index="0" instance=ExtResource( 1 )]
+script = ExtResource( 1 )
+Gertrude = ExtResource( 2 )
 
-[node name="Gertrude" parent="." index="1" instance=ExtResource( 2 )]
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( 320.222, 240.089 )
+texture = ExtResource( 3 )
+
+[node name="Player" parent="." index="1" instance=ExtResource( 4 )]
+
+[node name="GertrudeTimer" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 0.5
+one_shot = false
+autostart = false
+
+[node name="GertrudePath" type="Path2D" parent="." index="3"]
+
+self_modulate = Color( 0.5, 0.6, 1, 0.7 )
+curve = SubResource( 1 )
+
+[node name="GertrudeSpawnLocation" type="PathFollow2D" parent="GertrudePath" index="0"]
+
+offset = 0.0
+h_offset = 0.0
+v_offset = 0.0
+rotate = true
+cubic_interp = true
+loop = true
+lookahead = 4.0
+
+[connection signal="timeout" from="GertrudeTimer" to="." method="_on_GertrudeTimer_timeout"]
 
 
