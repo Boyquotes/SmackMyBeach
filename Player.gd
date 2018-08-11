@@ -8,6 +8,7 @@ func _ready():
 	screensize = get_viewport_rect().size
 
 func _physics_process(delta):
+	motion = Vector2()
 	# on sort de l application si on appuie sur ESC
 	if Input.is_key_pressed(KEY_ESCAPE):
         get_tree().quit()

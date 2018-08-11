@@ -20,18 +20,17 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 29.6967, 32 )
+extents = Vector2( 17.0031, 8.14562 )
 
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 32, 32 )
 
-[node name="Player" type="KinematicBody2D" index="0" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
 
-position = Vector2( 288, 192 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -44,10 +43,11 @@ _sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform"
 frames = SubResource( 1 )
 animation = "idle"
 centered = false
+offset = Vector2( -32, -64 )
 
 [node name="PlayerCol" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( 32, 32 )
+position = Vector2( 0.323532, -8.38202 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
@@ -55,6 +55,8 @@ _sections_unfolded = [ "Transform" ]
 "Player",
 ]]
 
+visible = false
+position = Vector2( -32, 32 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -62,10 +64,13 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
-position = Vector2( 32, 32 )
+position = Vector2( 288, 288 )
 shape = SubResource( 3 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

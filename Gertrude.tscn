@@ -22,9 +22,9 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 29.8865, 30.4596 )
+extents = Vector2( 19.9213, 10.4093 )
 
-[node name="Gertrude" type="Area2D"]
+[node name="Gertrude" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -44,11 +44,12 @@ MOVE_SPEED = 50
 frames = SubResource( 1 )
 animation = "idle"
 centered = false
+offset = Vector2( -32, -64 )
 _sections_unfolded = [ "Offset", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( 32, 32 )
+position = Vector2( 0.811707, -10.6599 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
 
