@@ -6,7 +6,9 @@ export (PackedScene) var LaMouette
 var velocity = Vector2()
 var score
 var cible = Vector2()
-var libre = true
+var emplacement_libre = true
+var emplacement_libre2 = true
+var emplacement_libre3 = true
 
 signal emplacement
 signal stopLaMouette
@@ -59,23 +61,39 @@ func _on_Emplacement_area_entered(area):
 #	print(position_emplacement)
 	
 	#area.queue_free()
-	print(libre)
+	print(emplacement_libre)
 #	print("on est la")
 #	emit_signal("emplacement")
-	if libre:
+	if emplacement_libre:
 		area.lezarde(position_emplacement)
 #		emit_signal("stopLaMouette")
-	libre = false
+	emplacement_libre = false
 	pass # replace with function body
 
 
 func _on_Beach_emplacement():
 	print("prends l'emplacement")
-	emit_signal("stopLaMouette")
+	#emit_signal("stopLaMouette")
 	pass # replace with function body
 
 
 func _on_Beach_stopLaMouette():
 	#$LaMouette.alors()
 	print("_on_stopLaMouette")
+	pass # replace with function body
+
+
+func _on_Emplacement2_area_entered(area2):
+	var position_emplacement = area2.position
+	if emplacement_libre2:
+		area2.lezarde(position_emplacement)
+	emplacement_libre2 = false
+	pass # replace with function body
+
+
+func _on_Emplacement3_area_entered(area3):
+	var position_emplacement = area3.position
+	if emplacement_libre3:
+		area3.lezarde(position_emplacement)
+	emplacement_libre3 = false
 	pass # replace with function body

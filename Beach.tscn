@@ -16,7 +16,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 8.10019, 27.856 )
+extents = Vector2( 17.8156, 14.5895 )
 
 [node name="Beach" type="Node2D"]
 
@@ -62,10 +62,44 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement" index="0"]
 
-position = Vector2( 57.0155, 49.6849 )
+position = Vector2( 30.8545, 16.8648 )
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Emplacement2" type="Area2D" parent="." index="5"]
+
+position = Vector2( -42.5711, 109.876 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement2" index="0"]
+
+position = Vector2( 89.5979, 74.419 )
+shape = SubResource( 2 )
+
+[node name="Emplacement3" type="Area2D" parent="." index="6"]
+
+position = Vector2( 160.058, 87.2826 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement3" index="0"]
+
+position = Vector2( -106.999, 18.0282 )
 shape = SubResource( 2 )
 
 [connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
@@ -75,5 +109,9 @@ shape = SubResource( 2 )
 [connection signal="timeout" from="GertrudeTimer" to="." method="_on_GertrudeTimer_timeout"]
 
 [connection signal="area_entered" from="Emplacement" to="." method="_on_Emplacement_area_entered"]
+
+[connection signal="area_entered" from="Emplacement2" to="." method="_on_Emplacement2_area_entered"]
+
+[connection signal="area_entered" from="Emplacement3" to="." method="_on_Emplacement3_area_entered"]
 
 
