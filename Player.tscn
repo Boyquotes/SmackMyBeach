@@ -164,7 +164,7 @@ extents = Vector2( 17.0031, 8.14562 )
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 46.1994, 46.5823 )
+extents = Vector2( 50.5048, 56.135 )
 
 [sub_resource type="CircleShape2D" id=4]
 
@@ -185,7 +185,7 @@ _sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform"
 [node name="PlayerSpr" type="AnimatedSprite" parent="." index="0"]
 
 frames = SubResource( 1 )
-animation = "static"
+animation = "debout"
 centered = false
 offset = Vector2( -32, -64 )
 
@@ -210,7 +210,8 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tuage" index="0"]
 
-position = Vector2( 0.00842285, -2.7106 )
+position = Vector2( 25.6788, 29.4236 )
+scale = Vector2( 0.520223, 0.973123 )
 shape = SubResource( 3 )
 
 [node name="EspaceVital" type="Area2D" parent="." index="3"]
@@ -270,10 +271,19 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
+[node name="kicktimer" type="Timer" parent="." index="9"]
+
+process_mode = 1
+wait_time = 0.3
+one_shot = true
+autostart = false
+
 [connection signal="animation_finished" from="PlayerSpr" to="." method="_on_PlayerSpr_animation_finished"]
 
 [connection signal="area_entered" from="Tuage" to="." method="_on_Area2D_area_entered"]
 
 [connection signal="timeout" from="StaticTimer" to="." method="_on_StaticTimer_timeout"]
+
+[connection signal="timeout" from="kicktimer" to="." method="_on_kicktimer_timeout"]
 
 

@@ -33,6 +33,9 @@ func _process(delta):
 			$PlayerSpr.play("kick")
 		else:
 			$PlayerSpr.frame = 0
+		if not $kicktimer.is_stopped():
+			$kicktimer.stop()
+		$kicktimer.start()
 	
 	# traitement des déplacements
 	if not has_moved and state in [PlayerState.WALK, PlayerState.STATIC_UP]:
@@ -81,7 +84,7 @@ func _process(delta):
 				$StaticTimer.start()
 
 			
-	attacking = motion.length() != 0
+	# attacking = motion.length() != 0
 
 	position += motion * delta
 	position.x = clamp(position.x, 0, screensize.x)
@@ -97,7 +100,7 @@ func _process(delta):
 			score_ennemis_espace_vital += ($"EspaceVital/CollisionShape2D".shape.radius - (area.global_position - global_position).length()) / $"EspaceVital/CollisionShape2D".shape.radius
 	score_ennemis_espace_vital = clamp(score_ennemis_espace_vital, 0, 4) / 4
 	
-	if (!attacking):
+	if not attacking:
 		stressval -= 0.2 * delta
 	stressval += 0.3 * score_ennemis_espace_vital * delta
 	stressval = clamp(stressval, 0, 1)
@@ -106,7 +109,8 @@ func _process(delta):
 	$PlayerSpr.modulate = Color(1.0, 1.0 - score_ennemis_espace_vital, 1.0 - score_ennemis_espace_vital)
 
 func _on_Area2D_area_entered(area):
-	if (attacking):
+	if attacking:
+		print("pan")
 		area.queue_free()
 		
 func getStress():
@@ -118,11 +122,11 @@ func _on_PlayerSpr_animation_finished():
 	elif $PlayerSpr.animation == "standdown":
 		$PlayerSpr.play("static")
 		state = PlayerState.STATIC
-	elif $PlayerSpr.animation == "kick":
-		attacking = false
-		
+	
 func _on_StaticTimer_timeout():
 	state = PlayerState.STANDING
 	$PlayerSpr.play("standdown")
 	$downstandplayer.play()
 	
+func _on_kicktimer_timeout():
+	attacking = false
