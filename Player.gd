@@ -58,3 +58,6 @@ func _process(delta):
 func _on_Area2D_area_entered(area):
 	if (attacking):
 		area.queue_free()
+		
+func getStress():
+	return stressval

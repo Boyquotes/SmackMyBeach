@@ -15,7 +15,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 61.6319, 29.3889 )
+extents = Vector2( 65.5627, 64 )
 
 [node name="Poste" type="StaticBody2D"]
 
@@ -41,7 +41,7 @@ animation = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( -1.56271, -34.7058 )
+position = Vector2( 0, -32 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
