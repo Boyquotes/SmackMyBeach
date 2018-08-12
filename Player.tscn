@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=2]
+[gd_scene load_steps=122 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/marche/marche-player-chemise-serviette0184.png" type="Texture" id=2]
@@ -116,6 +116,7 @@
 [ext_resource path="res://assets/kick/kick-player-chemise-serviette0096.png" type="Texture" id=114]
 [ext_resource path="res://assets/kick/kick-player-chemise-serviette0097.png" type="Texture" id=115]
 [ext_resource path="res://assets/kick/kick-player-chemise-serviette0098.png" type="Texture" id=116]
+[ext_resource path="res://assets/sound/karate2.wav" type="AudioStream" id=117]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -148,7 +149,7 @@ animations = [ {
 "frames": [ ExtResource( 91 ), ExtResource( 92 ), ExtResource( 93 ), ExtResource( 94 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 97 ), ExtResource( 98 ), ExtResource( 99 ), ExtResource( 100 ), ExtResource( 101 ), ExtResource( 102 ), ExtResource( 103 ), ExtResource( 104 ), ExtResource( 105 ), ExtResource( 106 ), ExtResource( 107 ), ExtResource( 108 ), ExtResource( 109 ), ExtResource( 110 ), ExtResource( 111 ), ExtResource( 112 ), ExtResource( 113 ), ExtResource( 114 ), ExtResource( 115 ), ExtResource( 116 ) ],
 "loop": false,
 "name": "kick",
-"speed": 24.0
+"speed": 50.0
 } ]
 _sections_unfolded = [ "Resource" ]
 
@@ -181,8 +182,7 @@ _sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform"
 [node name="PlayerSpr" type="AnimatedSprite" parent="." index="0"]
 
 frames = SubResource( 1 )
-animation = "kick"
-frame = 21
+animation = "static"
 centered = false
 offset = Vector2( -32, -64 )
 
@@ -227,9 +227,18 @@ shape = SubResource( 4 )
 [node name="StaticTimer" type="Timer" parent="." index="4"]
 
 process_mode = 1
-wait_time = 1.0
+wait_time = 2.0
 one_shot = true
 autostart = false
+
+[node name="kickplayer" type="AudioStreamPlayer" parent="." index="5"]
+
+stream = ExtResource( 117 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="animation_finished" from="PlayerSpr" to="." method="_on_PlayerSpr_animation_finished"]
 
