@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Gertrude.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprite_png/maillotrougeallongee.png" type="Texture" id=2]
-[ext_resource path="res://assets/sprite_png/maillotrougesexyquimarche1.png" type="Texture" id=3]
-[ext_resource path="res://assets/sprite_png/maillotrougesexyquimarche2.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprite_png/maillotrougesexyrf.png" type="Texture" id=3]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -13,7 +12,7 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "walk",
 "speed": 5.0
@@ -24,7 +23,7 @@ animations = [ {
 custom_solver_bias = 0.0
 extents = Vector2( 19.9213, 10.4093 )
 
-[node name="Gertrude" type="Area2D" groups=[
+[node name="Gertrude" type="Area2D" index="0" groups=[
 "ennemis",
 ]]
 
