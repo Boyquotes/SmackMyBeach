@@ -6,6 +6,7 @@ var screensize
 var attacking = false
 var stressval = 0
 
+
 func _ready():
 	screensize = get_viewport_rect().size
 
@@ -15,7 +16,6 @@ func _process(delta):
 	if Input.is_key_pressed(KEY_ESCAPE):
         get_tree().quit()
 	
-	$PlayerSpr.play("idle")
 	if Input.is_action_pressed("ui_right"):
 		motion.x += SPEED
 		$PlayerSpr.flip_h = false
@@ -25,12 +25,17 @@ func _process(delta):
 		$PlayerSpr.flip_h = true
 		$PlayerSpr.play("walk")
 	if Input.is_action_pressed("ui_up"):
+		$PlayerSpr.play("standup")
 		motion.y -= SPEED
-		$PlayerSpr.play("walk")
+	if Input.is_action_just_released("ui_up"):
+		$PlayerSpr.play("static")	
 	if Input.is_action_pressed("ui_down"):
 		motion.y += SPEED
 		$PlayerSpr.play("walk")
-	
+	if(!Input.is_action_pressed("ui_right") && !Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")):
+		$PlayerSpr.play("static")
+
+			
 	attacking = motion.length() != 0
 
 	position += motion * delta

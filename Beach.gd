@@ -2,6 +2,8 @@ extends Node2D
 
 export (PackedScene) var Gertrude
 export (PackedScene) var LaMouette
+export (PackedScene) var Minot
+export (PackedScene) var Lola
 
 var count = 0
 var velocity = Vector2()
@@ -29,9 +31,9 @@ func _process(delta):
 		get_tree().change_scene("res://GameOver.tscn")
 
 func _on_GertrudeTimer_timeout():
-	var array = [LaMouette, Gertrude]
+	var array = [LaMouette, Gertrude, Minot, Lola]
 	#La femme maillot rouge
-	var gertrude = array[randi() % 2].instance()
+	var gertrude = array[randi() % 4].instance()
 	$"GertrudePath/GertrudeSpawnLocation".unit_offset = randf()
 	gertrude.position = $"GertrudePath/GertrudeSpawnLocation".global_position
 	$YSort.add_child(gertrude)
