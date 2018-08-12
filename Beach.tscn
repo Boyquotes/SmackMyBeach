@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://assets/life_bar/fill.png" type="Texture" id=10]
 [ext_resource path="res://KOMIKRAK.ttf" type="DynamicFontData" id=11]
 [ext_resource path="res://assets/sound/lamer.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/sound/sea-gulls.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/sound/beach01.ogg" type="AudioStream" id=14]
 
 [sub_resource type="Curve2D" id=1]
 
@@ -200,7 +202,32 @@ _sections_unfolded = [ "custom_fonts" ]
 [node name="seaplayer" type="AudioStreamPlayer" parent="." index="7"]
 
 stream = ExtResource( 12 )
-volume_db = -8.0
+volume_db = -4.21
+pitch_scale = 1.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+
+[node name="seagullplayer" type="AudioStreamPlayer" parent="." index="8"]
+
+stream = ExtResource( 13 )
+volume_db = -10.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="seagulltimer" type="Timer" parent="." index="9"]
+
+process_mode = 1
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="musicplayer" type="AudioStreamPlayer" parent="." index="10"]
+
+stream = ExtResource( 14 )
+volume_db = -10.0
 pitch_scale = 1.0
 autoplay = true
 mix_target = 0
@@ -213,5 +240,7 @@ bus = "Master"
 [connection signal="area_entered" from="Emplacement" to="." method="_on_Emplacement_area_entered"]
 
 [connection signal="finished" from="seaplayer" to="." method="_on_seaplayer_finished"]
+
+[connection signal="timeout" from="seagulltimer" to="." method="_on_seagulltimer_timeout"]
 
 

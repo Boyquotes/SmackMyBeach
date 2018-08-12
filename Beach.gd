@@ -40,3 +40,15 @@ func _on_GertrudeTimer_timeout():
 	$"GertrudePath/GertrudeSpawnLocation".unit_offset = randf()
 	gertrude.position = $"GertrudePath/GertrudeSpawnLocation".global_position
 	$YSort.add_child(gertrude)
+
+
+func _on_seaplayer_finished():
+	$seaplayer.play()
+
+
+func _on_seagulltimer_timeout():
+	# print("_on_seagulltimer_timeout")
+	$seagullplayer.play()
+	$seagulltimer.wait_time = 110 + randf() * 30
+	print($seagulltimer.wait_time)
+	$seagulltimer.start()
