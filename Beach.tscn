@@ -1,26 +1,39 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
 [ext_resource path="res://LaMouette.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/beach.png" type="Texture" id=4]
-[ext_resource path="res://HUD.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://poste.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://poste.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/life_bar/bg.png" type="Texture" id=7]
+[ext_resource path="res://assets/life_bar/fill.png" type="Texture" id=8]
+[ext_resource path="res://KOMIKRAK.ttf" type="DynamicFontData" id=9]
 
 [sub_resource type="Curve2D" id=1]
 
 bake_interval = 5.0
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 640, 0, 0, 0, 0, 0, 640, 480, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 0 )
+"points": PoolVector2Array( 0, 0, 0, 0, -32, 352, 0, 0, 0, 0, -32, -32, 0, 0, 0, 0, 672, -32, 0, 0, 0, 0, 672, 352 )
 }
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 32.8755, 33.3961 )
 
-[node name="Beach" type="Node2D"]
+[sub_resource type="DynamicFont" id=3]
+
+size = 33
+use_mipmaps = false
+use_filter = false
+extra_spacing_top = -10
+extra_spacing_bottom = 5
+font_data = ExtResource( 9 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
+
+[node name="Beach" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 __meta__ = {
@@ -35,21 +48,14 @@ LaMouette = ExtResource( 3 )
 position = Vector2( 320.222, 240.089 )
 texture = ExtResource( 4 )
 
-[node name="HUD" parent="." index="1" instance=ExtResource( 5 )]
-
-margin_left = 598.0
-margin_top = 7.0
-margin_right = 638.0
-margin_bottom = 47.0
-
-[node name="GertrudeTimer" type="Timer" parent="." index="2"]
+[node name="GertrudeTimer" type="Timer" parent="." index="1"]
 
 process_mode = 1
-wait_time = 0.5
+wait_time = 0.1
 one_shot = false
 autostart = false
 
-[node name="GertrudePath" type="Path2D" parent="." index="3"]
+[node name="GertrudePath" type="Path2D" parent="." index="2"]
 
 editor/display_folded = true
 self_modulate = Color( 0.5, 0.6, 1, 0.7 )
@@ -57,7 +63,8 @@ curve = SubResource( 1 )
 
 [node name="GertrudeSpawnLocation" type="PathFollow2D" parent="GertrudePath" index="0"]
 
-offset = 0.0
+position = Vector2( 422.866, -32 )
+offset = 836.138
 h_offset = 0.0
 v_offset = 0.0
 rotate = true
@@ -65,9 +72,10 @@ cubic_interp = true
 loop = true
 lookahead = 4.0
 
-[node name="Emplacement" type="Area2D" parent="." index="4"]
+[node name="Emplacement" type="Area2D" parent="." index="3"]
 
 editor/display_folded = true
+position = Vector2( -735.964, -120.266 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -83,64 +91,112 @@ position = Vector2( 47.487, 51.1797 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Emplacement2" type="Area2D" parent="." index="5"]
+[node name="YSort" type="YSort" parent="." index="4"]
 
 editor/display_folded = true
-position = Vector2( -42.5711, 109.876 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement2" index="0"]
-
-show_behind_parent = true
-position = Vector2( 89.9344, 50.8246 )
-shape = SubResource( 2 )
-_sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
-
-[node name="Emplacement3" type="Area2D" parent="." index="6"]
-
-editor/display_folded = true
-position = Vector2( 160.058, 87.2826 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Emplacement3" index="0"]
-
-position = Vector2( -111.362, 193.491 )
-rotation = -0.0046773
-shape = SubResource( 2 )
-_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
-
-[node name="YSort" type="YSort" parent="." index="7"]
-
 position = Vector2( 0, -0.902496 )
 sort_enabled = true
 
-[node name="Player" parent="YSort" index="0" instance=ExtResource( 6 )]
+[node name="Player" parent="YSort" index="0" instance=ExtResource( 5 )]
 
-[node name="Poste" parent="YSort" index="1" instance=ExtResource( 7 )]
+position = Vector2( 305, 293 )
 
-position = Vector2( 452.576, 166.866 )
+[node name="Poste" parent="YSort" index="1" instance=ExtResource( 6 )]
+
+position = Vector2( 373.576, 216.866 )
 scale = Vector2( 0.545355, 0.545355 )
+
+[node name="water" type="StaticBody2D" parent="." index="5"]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="water" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 0, 352, 168.028, 367.42, 287.158, 373.738, 412.606, 376.445, 449.608, 366.518, 510.978, 370.128, 650.866, 350.273, 659.891, 487.453, -10.6673, 502.796 )
+
+[node name="header" type="HBoxContainer" parent="." index="6"]
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -32.0
+margin_top = 364.0
+margin_right = 458.0
+margin_bottom = 421.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="stress" type="TextureProgress" parent="header" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 396.0
+margin_bottom = 57.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 7 )
+texture_over = null
+texture_progress = ExtResource( 8 )
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Radial Fill", "Textures" ]
+
+[node name="Label" type="Label" parent="header" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 400.0
+margin_top = 8.0
+margin_right = 479.0
+margin_bottom = 49.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "200"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
 
 [connection signal="timeout" from="GertrudeTimer" to="." method="_on_GertrudeTimer_timeout"]
 
 [connection signal="area_entered" from="Emplacement" to="." method="_on_Emplacement_area_entered"]
-
-[connection signal="area_entered" from="Emplacement2" to="." method="_on_Emplacement2_area_entered"]
-
-[connection signal="area_entered" from="Emplacement3" to="." method="_on_Emplacement3_area_entered"]
 
 

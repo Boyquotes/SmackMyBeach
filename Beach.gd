@@ -11,38 +11,38 @@ var emplacement_libre = true
 var emplacement_libre2 = true
 var emplacement_libre3 = true
 
+var time_score
+var initial_time
+
 signal emplacement
 
 func _ready():
+	initial_time = OS.get_ticks_msec()
 	$GertrudeTimer.start()
+	var poste = get_node("YSort/Poste")
+	print("play animation")
+	poste.get_node("AnimationPlayer").play("explosionPoste")
 	randomize()
 
 func _process(delta):
-#	print('la')
-#	print(emplacement_libre)
-#	print('la2')
-#	print(emplacement_libre2)
-#	print('la3')
-#	print(emplacement_libre3)
-	pass
+	time_score =  floor((OS.get_ticks_msec() - initial_time) / 50) * 10
+	$"header/Label".text = "Score: " + str(time_score) 
+	
+	$"header/stress".value = $"YSort/Player".stressval * 100
 
 func moins_de_place():
 	score -= 1
-	get_node("HUD/Vie").text = str(score)
+	#get_node("HUD/Vie").text = str(score)
 	
 
 func _on_GertrudeTimer_timeout():
-	#La femme maillot rouge
-	var point = rand_range(0,300)
-	var gertrude = Gertrude.instance()
-	$YSort.add_child(gertrude)
-	gertrude.position = Vector2(gertrude.position.x,point)
 	
-	#La mouette
-	var point2 = rand_range(0,300)
-	var lamouette = LaMouette.instance()
-	$YSort.add_child(lamouette)
-	lamouette.position = Vector2(lamouette.position.x,point2)
+	var array = [LaMouette, Gertrude]
+	#La femme maillot rouge
+	var gertrude = array[randi() % 2].instance()
+	$"GertrudePath/GertrudeSpawnLocation".unit_offset = randf()
+	gertrude.position = $"GertrudePath/GertrudeSpawnLocation".global_position
+	$YSort.add_child(gertrude)
 	
 	count += 1
 	if count == 5:
@@ -82,34 +82,4 @@ func _on_Emplacement_area_entered(area):
 			area.lezarde(position_emplacement)
 			moins_de_place()
 			emplacement_libre = false
-	pass # replace with function body
-
-
-func _on_Emplacement2_area_entered(area2):
-	if area2.is_in_group('Player'):
-		print('le joeur est la')
-	if !area2.is_in_group("Player"):
-		var position_emplacement = area2.position
-	#	print("222")
-	#	print(area2)
-	#	print(emplacement_libre2)
-		if emplacement_libre2:
-			area2.lezarde(position_emplacement)
-			moins_de_place()
-			emplacement_libre2 = false
-	pass # replace with function body
-
-
-func _on_Emplacement3_area_entered(area3):
-	if area3.is_in_group('Player'):
-		print('le joeur est la')
-	if !area3.is_in_group("Player"):
-		var position_emplacement = area3.position
-	#	print("333")
-	#	print(area3)
-	#	print(emplacement_libre3)
-		if emplacement_libre3:
-			area3.lezarde(position_emplacement)
-			moins_de_place()
-			emplacement_libre3 = false
 	pass # replace with function body
