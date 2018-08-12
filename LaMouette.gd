@@ -24,5 +24,5 @@ func lezarde(position_emplacement):
 	position.y = position_emplacement.y
 	MOVE_SPEED = 0
 
-func _on_Visibility_screen_exited():
+func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
