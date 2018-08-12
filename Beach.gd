@@ -22,6 +22,10 @@ var initial_time
 var gertrude_count = 0
 var gertrude_wait = 1
 
+enum BeachState { RUNNING, GAME_OVER }
+
+var state = BeachState.RUNNING
+
 signal emplacement
 
 func _ready():
@@ -30,12 +34,19 @@ func _ready():
 	randomize()
 
 func _process(delta):
-	time_score =  floor((OS.get_ticks_msec() - initial_time) / 50) * 10
-	$"header/Label".text = "Score: " + str(time_score)
-	$"header/stress".value = $"YSort/Player".stressval * 100
+	if not state == BeachState.GAME_OVER:
+		time_score =  floor((OS.get_ticks_msec() - initial_time) / 50) * 10
+		$"header/Label".text = "Score: " + str(time_score)
+		$"header/stress".value = $"YSort/Player".stressval * 100
+	else:
+		if Input.is_action_pressed("kick"):
+			get_tree().change_scene("res://Beach.tscn")
+	
 	if $"YSort/Player".stressval * 100 == 100:
-		# $YSort/Player.queue_free()
+		state = BeachState.GAME_OVER
+		$YSort/Player.disable()
 		$gameovertimer.start()
+		$gameoverlabel.show()
 
 func _on_GertrudeTimer_timeout():
 	var array = [LaMouette, Gertrude, Minot, Lola]

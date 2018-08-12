@@ -8,7 +8,7 @@ var stressval = 0
 
 var can_move = true
 
-enum PlayerState { STATIC, STANDING, STATIC_UP, WALK }
+enum PlayerState { STATIC, STANDING, STATIC_UP, WALK, DISABLED }
 
 var state = PlayerState.STATIC
 
@@ -22,10 +22,13 @@ func _process(delta):
 	if Input.is_key_pressed(KEY_ESCAPE):
         get_tree().quit()
 		
+	if state == PlayerState.DISABLED:
+		return
+		
 	var has_moved = false
 	
 	# on traite le kick en premier
-	if state in [PlayerState.WALK, PlayerState.STATIC_UP] and Input.is_action_pressed("kick"):
+	if Input.is_action_pressed("kick") and state in [PlayerState.WALK, PlayerState.STATIC_UP]:
 		if not $kickplayer.playing:
 			$kickplayer.play()
 		has_moved = true
@@ -138,3 +141,11 @@ func _on_StaticTimer_timeout():
 	
 func _on_kicktimer_timeout():
 	attacking = false
+
+func enable():
+	show()
+	state = PlayerState.STATIC
+		
+func disable():
+	hide()
+	state = PlayerState.DISABLED

@@ -38,7 +38,7 @@ extra_spacing_bottom = 5
 font_data = ExtResource( 11 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="Beach" type="Node2D"]
+[node name="Beach" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 __meta__ = {
@@ -100,6 +100,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="YSort" type="YSort" parent="." index="4"]
 
+editor/display_folded = true
 position = Vector2( 0, -0.902496 )
 sort_enabled = true
 
@@ -136,7 +137,7 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -32.0
 margin_top = 364.0
-margin_right = 458.0
+margin_right = 530.0
 margin_bottom = 421.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -239,6 +240,32 @@ process_mode = 1
 wait_time = 5.0
 one_shot = true
 autostart = false
+
+[node name="gameoverlabel" type="Label" parent="." index="12"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 13.0
+margin_top = 212.0
+margin_right = 659.0
+margin_bottom = 253.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "GAME OVER"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
 
