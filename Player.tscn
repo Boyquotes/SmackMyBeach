@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=2]
+[gd_scene load_steps=123 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/marche/marche-player-chemise-serviette0184.png" type="Texture" id=2]
@@ -117,6 +117,7 @@
 [ext_resource path="res://assets/kick/kick-player-chemise-serviette0097.png" type="Texture" id=115]
 [ext_resource path="res://assets/kick/kick-player-chemise-serviette0098.png" type="Texture" id=116]
 [ext_resource path="res://assets/sound/karate2.wav" type="AudioStream" id=117]
+[ext_resource path="res://assets/sound/foot1.wav" type="AudioStream" id=118]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -236,6 +237,15 @@ autostart = false
 stream = ExtResource( 117 )
 volume_db = 0.0
 pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="footplayer" type="AudioStreamPlayer" parent="." index="6"]
+
+stream = ExtResource( 118 )
+volume_db = -9.6
+pitch_scale = 0.91
 autoplay = false
 mix_target = 0
 bus = "Master"

@@ -55,6 +55,12 @@ func _process(delta):
 			
 		if has_moved:
 			$PlayerSpr.play("walk")
+			
+			if not $footplayer.playing:
+				$footplayer.volume_db = - 15 - randf() * 5
+				$footplayer.pitch_scale = 0.8 + randf() * 0.1
+				$footplayer.play()
+				
 			state = PlayerState.WALK
 			if not $StaticTimer.is_stopped():
 				$StaticTimer.stop()
