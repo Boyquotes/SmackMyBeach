@@ -55,7 +55,6 @@ _sections_unfolded = [ "Transform" ]
 "Player",
 ]]
 
-visible = false
 position = Vector2( -32, 32 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

@@ -15,6 +15,9 @@ signal emplacement
 
 func _ready():
 	$GertrudeTimer.start()
+	var poste = get_node("YSort/Poste")
+	print("play animation")
+	poste.get_node("AnimationPlayer").play("explosionPoste")
 	randomize()
 
 func _process(delta):
