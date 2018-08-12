@@ -28,6 +28,7 @@ func _process(delta):
 		if not $kickplayer.playing:
 			$kickplayer.play()
 		has_moved = true
+		attacking = true
 		if $PlayerSpr.animation != "kick":
 			$PlayerSpr.play("kick")
 		else:
@@ -117,6 +118,8 @@ func _on_PlayerSpr_animation_finished():
 	elif $PlayerSpr.animation == "standdown":
 		$PlayerSpr.play("static")
 		state = PlayerState.STATIC
+	elif $PlayerSpr.animation == "kick":
+		attacking = false
 		
 func _on_StaticTimer_timeout():
 	state = PlayerState.STANDING
