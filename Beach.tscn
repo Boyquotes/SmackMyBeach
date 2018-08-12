@@ -58,7 +58,7 @@ texture = ExtResource( 6 )
 [node name="GertrudeTimer" type="Timer" parent="." index="1"]
 
 process_mode = 1
-wait_time = 0.1
+wait_time = 1.0
 one_shot = false
 autostart = false
 

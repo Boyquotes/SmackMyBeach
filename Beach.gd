@@ -19,6 +19,9 @@ var emplacement_libre3 = true
 var time_score
 var initial_time
 
+var gertrude_count = 0
+var gertrude_wait = 1
+
 signal emplacement
 
 func _ready():
@@ -41,14 +44,17 @@ func _on_GertrudeTimer_timeout():
 	gertrude.position = $"GertrudePath/GertrudeSpawnLocation".global_position
 	$YSort.add_child(gertrude)
 
+	gertrude_count += 1
+	
+	if gertrude_count % 10 and gertrude_wait > 0.1:
+		gertrude_wait -= 0.05 * gertrude_count / 100
+		$GertrudeTimer.wait_time = gertrude_wait
 
 func _on_seaplayer_finished():
 	$seaplayer.play()
-
 
 func _on_seagulltimer_timeout():
 	# print("_on_seagulltimer_timeout")
 	$seagullplayer.play()
 	$seagulltimer.wait_time = 110 + randf() * 30
-	print($seagulltimer.wait_time)
 	$seagulltimer.start()

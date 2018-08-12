@@ -171,7 +171,7 @@ extents = Vector2( 50.5048, 56.135 )
 custom_solver_bias = 0.0
 radius = 176.268
 
-[node name="Player" type="KinematicBody2D" index="0" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
 
@@ -274,7 +274,7 @@ bus = "Master"
 [node name="kicktimer" type="Timer" parent="." index="9"]
 
 process_mode = 1
-wait_time = 0.3
+wait_time = 0.8
 one_shot = true
 autostart = false
 
