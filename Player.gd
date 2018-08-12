@@ -47,6 +47,9 @@ func _process(delta):
 			state = PlayerState.WALK
 			if not $StaticTimer.is_stopped():
 				$StaticTimer.stop()
+				
+		if Input.is_action_pressed("kick"):
+			$PlayerSpr.play("kick")
 			
 	elif state  == PlayerState.STATIC:
 		if Input.is_action_pressed("ui_up"):
