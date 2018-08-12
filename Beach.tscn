@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://assets/life_bar/bg.png" type="Texture" id=9]
 [ext_resource path="res://assets/life_bar/fill.png" type="Texture" id=10]
 [ext_resource path="res://KOMIKRAK.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://assets/sound/lamer.ogg" type="AudioStream" id=12]
 
 [sub_resource type="Curve2D" id=1]
 
@@ -35,7 +36,7 @@ extra_spacing_bottom = 5
 font_data = ExtResource( 11 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="Beach" type="Node2D"]
+[node name="Beach" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 __meta__ = {
@@ -196,10 +197,21 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
+[node name="seaplayer" type="AudioStreamPlayer" parent="." index="7"]
+
+stream = ExtResource( 12 )
+volume_db = -8.0
+pitch_scale = 1.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+
 [connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
 
 [connection signal="timeout" from="GertrudeTimer" to="." method="_on_GertrudeTimer_timeout"]
 
 [connection signal="area_entered" from="Emplacement" to="." method="_on_Emplacement_area_entered"]
+
+[connection signal="finished" from="seaplayer" to="." method="_on_seaplayer_finished"]
 
 
