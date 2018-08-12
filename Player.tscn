@@ -164,14 +164,14 @@ extents = Vector2( 17.0031, 8.14562 )
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 50.5048, 56.135 )
+extents = Vector2( 66.2078, 59.6219 )
 
 [sub_resource type="CircleShape2D" id=4]
 
 custom_solver_bias = 0.0
 radius = 176.268
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Player",
 ]]
 
@@ -185,12 +185,14 @@ _sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform"
 [node name="PlayerSpr" type="AnimatedSprite" parent="." index="0"]
 
 frames = SubResource( 1 )
-animation = "debout"
+animation = "kick"
+frame = 25
 centered = false
 offset = Vector2( -32, -64 )
 
 [node name="PlayerCol" type="CollisionShape2D" parent="." index="1"]
 
+visible = false
 position = Vector2( 0.323532, -8.38202 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
@@ -210,8 +212,8 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tuage" index="0"]
 
-position = Vector2( 25.6788, 29.4236 )
-scale = Vector2( 0.520223, 0.973123 )
+position = Vector2( 32.4689, 29.3211 )
+scale = Vector2( 0.429838, 0.842655 )
 shape = SubResource( 3 )
 
 [node name="EspaceVital" type="Area2D" parent="." index="3"]
@@ -231,7 +233,7 @@ shape = SubResource( 4 )
 [node name="StaticTimer" type="Timer" parent="." index="4"]
 
 process_mode = 1
-wait_time = 2.0
+wait_time = 1.0
 one_shot = true
 autostart = false
 
@@ -274,7 +276,7 @@ bus = "Master"
 [node name="kicktimer" type="Timer" parent="." index="9"]
 
 process_mode = 1
-wait_time = 0.8
+wait_time = 0.3
 one_shot = true
 autostart = false
 

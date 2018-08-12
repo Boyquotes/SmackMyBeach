@@ -14,6 +14,7 @@ var state = PlayerState.STATIC
 
 func _ready():
 	screensize = get_viewport_rect().size
+	$PlayerSpr.play("static")
 
 func _process(delta):
 	motion = Vector2()
@@ -29,13 +30,20 @@ func _process(delta):
 			$kickplayer.play()
 		has_moved = true
 		attacking = true
+		
 		if $PlayerSpr.animation != "kick":
 			$PlayerSpr.play("kick")
 		else:
-			$PlayerSpr.frame = 0
+			$PlayerSpr.frame = 10
+		
 		if not $kicktimer.is_stopped():
 			$kicktimer.stop()
+			
 		$kicktimer.start()
+		
+		for area in $Tuage.get_overlapping_areas():
+			if area.is_in_group("ennemis"):
+				area.free()
 	
 	# traitement des déplacements
 	if not has_moved and state in [PlayerState.WALK, PlayerState.STATIC_UP]:
