@@ -28,6 +28,8 @@ func _process(delta):
 	time_score =  floor((OS.get_ticks_msec() - initial_time) / 50) * 10
 	$"header/Label".text = "Score: " + str(time_score)
 	$"header/stress".value = $"YSort/Player".stressval * 100
+	if $"YSort/Player".stressval * 100 == 100:
+		get_tree().change_scene("res://GameOver.tscn")
 
 func _on_GertrudeTimer_timeout():
 	var array = [LaMouette, Gertrude]
