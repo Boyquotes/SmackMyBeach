@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Titre.gd" type="Script" id=1]
 [ext_resource path="res://assets/splash.png" type="Texture" id=2]
 [ext_resource path="res://assets/sound/beach01.ogg" type="AudioStream" id=3]
+[ext_resource path="res://a_or_space.tscn" type="PackedScene" id=4]
 
 [node name="Titre" type="Node2D"]
 
@@ -22,5 +23,21 @@ pitch_scale = 1.0
 autoplay = true
 mix_target = 0
 bus = "Master"
+
+[node name="a_or_space" parent="." index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 230.837, 406.481 )
+
+[node name="tween" type="Tween" parent="." index="3"]
+
+repeat = true
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = true
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
+
+[connection signal="tween_step" from="tween" to="." method="_on_Tween_tween_step"]
 
 

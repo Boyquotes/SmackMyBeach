@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://assets/sound/lamer.ogg" type="AudioStream" id=12]
 [ext_resource path="res://assets/sound/sea-gulls.ogg" type="AudioStream" id=13]
 [ext_resource path="res://assets/sound/beach01.ogg" type="AudioStream" id=14]
+[ext_resource path="res://a_or_space.tscn" type="PackedScene" id=15]
 
 [sub_resource type="Curve2D" id=1]
 
@@ -266,6 +267,10 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
+
+[node name="a_or_space" parent="gameoverlabel" index="0" instance=ExtResource( 15 )]
+
+position = Vector2( 237.218, 46.4709 )
 
 [connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
 
