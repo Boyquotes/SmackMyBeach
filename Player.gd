@@ -55,7 +55,6 @@ func _process(delta):
 			
 		if has_moved:
 			$PlayerSpr.play("walk")
-			
 			if not $footplayer.playing:
 				$footplayer.volume_db = - 15 - randf() * 5
 				$footplayer.pitch_scale = 0.8 + randf() * 0.1
@@ -68,6 +67,7 @@ func _process(delta):
 	elif state  == PlayerState.STATIC:
 		if Input.is_action_pressed("ui_up"):
 			$PlayerSpr.play("standup")
+			$upstandplayer.play()
 			motion.y -= SPEED
 			state = PlayerState.STANDING
 		
@@ -121,4 +121,5 @@ func _on_PlayerSpr_animation_finished():
 func _on_StaticTimer_timeout():
 	state = PlayerState.STANDING
 	$PlayerSpr.play("standdown")
+	$downstandplayer.play()
 	
