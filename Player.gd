@@ -110,7 +110,7 @@ func _process(delta):
 
 func _on_Area2D_area_entered(area):
 	if attacking:
-		print("pan")
+		# print("pan")
 		area.queue_free()
 		
 func getStress():
