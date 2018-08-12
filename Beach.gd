@@ -4,6 +4,9 @@ export (PackedScene) var Gertrude
 export (PackedScene) var LaMouette
 export (PackedScene) var Minot
 export (PackedScene) var Lola
+#export (PackedScene) var Poissons
+#export (PackedScene) var Requin
+
 
 var count = 0
 var velocity = Vector2()
