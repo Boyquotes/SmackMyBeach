@@ -6,6 +6,11 @@ var screensize
 var attacking = false
 var stressval = 0
 
+var can_move = true
+
+enum PlayerState { STATIC, STANDING, STATIC_UP, WALK }
+
+var state = PlayerState.STATIC
 
 func _ready():
 	screensize = get_viewport_rect().size
@@ -15,25 +20,52 @@ func _process(delta):
 	# on sort de l application si on appuie sur ESC
 	if Input.is_key_pressed(KEY_ESCAPE):
         get_tree().quit()
+		
+	var has_moved = false
 	
-	if Input.is_action_pressed("ui_right"):
-		motion.x += SPEED
-		$PlayerSpr.flip_h = false
-		$PlayerSpr.play("walk")
-	if Input.is_action_pressed("ui_left"):
-		motion.x -= SPEED
-		$PlayerSpr.flip_h = true
-		$PlayerSpr.play("walk")
-	if Input.is_action_pressed("ui_up"):
-		$PlayerSpr.play("standup")
-		motion.y -= SPEED
-	if Input.is_action_just_released("ui_up"):
-		$PlayerSpr.play("static")	
-	if Input.is_action_pressed("ui_down"):
-		motion.y += SPEED
-		$PlayerSpr.play("walk")
-	if(!Input.is_action_pressed("ui_right") && !Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")):
-		$PlayerSpr.play("static")
+	if state in [PlayerState.WALK, PlayerState.STATIC_UP]:
+		if Input.is_action_pressed("ui_right"):
+			motion.x += SPEED
+			$PlayerSpr.flip_h = false
+			has_moved = true
+			
+		if Input.is_action_pressed("ui_left"):
+			motion.x -= SPEED
+			$PlayerSpr.flip_h = true
+			has_moved = true
+			
+		if Input.is_action_pressed("ui_down"):
+			motion.y += SPEED
+			has_moved = true
+			
+		if Input.is_action_pressed("ui_up"):
+			motion.y -= SPEED
+			has_moved = true
+			
+		if has_moved:
+			$PlayerSpr.play("walk")
+			state = PlayerState.WALK
+			if not $StaticTimer.is_stopped():
+				$StaticTimer.stop()
+			
+	elif state  == PlayerState.STATIC:
+		if Input.is_action_pressed("ui_up"):
+			$PlayerSpr.play("standup")
+			motion.y -= SPEED
+			state = PlayerState.STANDING
+		
+	#if Input.is_action_just_released("ui_up"):
+	#	$PlayerSpr.play("static")	
+	
+		
+	#if(!Input.is_action_pressed("ui_right") && !Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")):
+	if not has_moved:
+		if state == PlayerState.WALK:
+			$PlayerSpr.play("debout")
+			state = PlayerState.STATIC_UP
+		elif state == PlayerState.STATIC_UP:
+			if $StaticTimer.is_stopped():
+				$StaticTimer.start()
 
 			
 	attacking = motion.length() != 0
@@ -66,3 +98,15 @@ func _on_Area2D_area_entered(area):
 		
 func getStress():
 	return stressval
+
+func _on_PlayerSpr_animation_finished():
+	if $PlayerSpr.animation == "standup":
+		state = PlayerState.STATIC_UP
+	elif $PlayerSpr.animation == "standdown":
+		$PlayerSpr.play("static")
+		state = PlayerState.STATIC
+		
+func _on_StaticTimer_timeout():
+	print("_on_StaticTimer_timeout")
+	$PlayerSpr.play("standdown")
+	state = PlayerState.STANDING
