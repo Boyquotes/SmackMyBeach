@@ -1,0 +1,21 @@
+[gd_resource type="Animation" format=2]
+
+[resource]
+
+resource_name = "explositionPoste"
+length = 6.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -2, 0, 1 ),
+"transitions": PoolRealArray( 1, 0.135231, 0.104466 ),
+"update": 0,
+"values": [ 0.0, 0.0, 90.0 ]
+}
+
