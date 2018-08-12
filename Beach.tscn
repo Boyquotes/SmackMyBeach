@@ -38,7 +38,7 @@ extra_spacing_bottom = 5
 font_data = ExtResource( 11 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="Beach" type="Node2D" index="0"]
+[node name="Beach" type="Node2D"]
 
 script = ExtResource( 1 )
 __meta__ = {
@@ -233,6 +233,13 @@ autoplay = true
 mix_target = 0
 bus = "Master"
 
+[node name="gameovertimer" type="Timer" parent="." index="11"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = true
+autostart = false
+
 [connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
 
 [connection signal="timeout" from="GertrudeTimer" to="." method="_on_GertrudeTimer_timeout"]
@@ -242,5 +249,7 @@ bus = "Master"
 [connection signal="finished" from="seaplayer" to="." method="_on_seaplayer_finished"]
 
 [connection signal="timeout" from="seagulltimer" to="." method="_on_seagulltimer_timeout"]
+
+[connection signal="timeout" from="gameovertimer" to="." method="_on_gameovertimer_timeout"]
 
 

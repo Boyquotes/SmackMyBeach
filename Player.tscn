@@ -164,7 +164,7 @@ extents = Vector2( 17.0031, 8.14562 )
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 66.2078, 59.6219 )
+extents = Vector2( 66.2078, 22.8785 )
 
 [sub_resource type="CircleShape2D" id=4]
 
@@ -212,8 +212,8 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tuage" index="0"]
 
-position = Vector2( 32.4689, 29.3211 )
-scale = Vector2( 0.429838, 0.842655 )
+position = Vector2( 32.4689, 46.877 )
+scale = Vector2( 0.429838, 1.37327 )
 shape = SubResource( 3 )
 
 [node name="EspaceVital" type="Area2D" parent="." index="3"]

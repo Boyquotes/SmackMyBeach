@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Titre.gd" type="Script" id=1]
-[ext_resource path="res://titre/titre.png" type="Texture" id=2]
+[ext_resource path="res://assets/splash.png" type="Texture" id=2]
+[ext_resource path="res://assets/sound/beach01.ogg" type="AudioStream" id=3]
 
-[node name="Titre" type="Node2D" index="0"]
+[node name="Titre" type="Node2D"]
 
 script = ExtResource( 1 )
 
@@ -12,5 +13,14 @@ script = ExtResource( 1 )
 texture = ExtResource( 2 )
 centered = false
 _sections_unfolded = [ "Offset" ]
+
+[node name="player" type="AudioStreamPlayer" parent="." index="1"]
+
+stream = ExtResource( 3 )
+volume_db = -5.0
+pitch_scale = 1.0
+autoplay = true
+mix_target = 0
+bus = "Master"
 
 

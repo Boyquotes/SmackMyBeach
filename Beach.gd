@@ -34,7 +34,8 @@ func _process(delta):
 	$"header/Label".text = "Score: " + str(time_score)
 	$"header/stress".value = $"YSort/Player".stressval * 100
 	if $"YSort/Player".stressval * 100 == 100:
-		get_tree().change_scene("res://GameOver.tscn")
+		# $YSort/Player.queue_free()
+		$gameovertimer.start()
 
 func _on_GertrudeTimer_timeout():
 	var array = [LaMouette, Gertrude, Minot, Lola]
@@ -58,3 +59,7 @@ func _on_seagulltimer_timeout():
 	$seagullplayer.play()
 	$seagulltimer.wait_time = 110 + randf() * 30
 	$seagulltimer.start()
+
+
+func _on_gameovertimer_timeout():
+	get_tree().change_scene("res://GameOver.tscn")
