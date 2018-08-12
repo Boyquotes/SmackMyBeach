@@ -23,7 +23,18 @@ func _process(delta):
 		
 	var has_moved = false
 	
-	if state in [PlayerState.WALK, PlayerState.STATIC_UP]:
+	# on traite le kick en premier
+	if state in [PlayerState.WALK, PlayerState.STATIC_UP] and Input.is_action_pressed("kick"):
+		if not $kickplayer.playing:
+			$kickplayer.play()
+		has_moved = true
+		if $PlayerSpr.animation != "kick":
+			$PlayerSpr.play("kick")
+		else:
+			$PlayerSpr.frame = 0
+	
+	# traitement des déplacements
+	if not has_moved and state in [PlayerState.WALK, PlayerState.STATIC_UP]:
 		if Input.is_action_pressed("ui_right"):
 			motion.x += SPEED
 			$PlayerSpr.flip_h = false
@@ -44,24 +55,22 @@ func _process(delta):
 			
 		if has_moved:
 			$PlayerSpr.play("walk")
+			
+			if not $footplayer.playing:
+				$footplayer.volume_db = - 15 - randf() * 5
+				$footplayer.pitch_scale = 0.8 + randf() * 0.1
+				$footplayer.play()
+				
 			state = PlayerState.WALK
 			if not $StaticTimer.is_stopped():
 				$StaticTimer.stop()
-				
-		if Input.is_action_pressed("kick"):
-			$PlayerSpr.play("kick")
-			
+						
 	elif state  == PlayerState.STATIC:
 		if Input.is_action_pressed("ui_up"):
 			$PlayerSpr.play("standup")
 			motion.y -= SPEED
 			state = PlayerState.STANDING
 		
-	#if Input.is_action_just_released("ui_up"):
-	#	$PlayerSpr.play("static")	
-	
-		
-	#if(!Input.is_action_pressed("ui_right") && !Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")):
 	if not has_moved:
 		if state == PlayerState.WALK:
 			$PlayerSpr.play("debout")
@@ -110,6 +119,6 @@ func _on_PlayerSpr_animation_finished():
 		state = PlayerState.STATIC
 		
 func _on_StaticTimer_timeout():
-	print("_on_StaticTimer_timeout")
-	$PlayerSpr.play("standdown")
 	state = PlayerState.STANDING
+	$PlayerSpr.play("standdown")
+	
