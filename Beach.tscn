@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
@@ -11,6 +11,10 @@
 [ext_resource path="res://assets/life_bar/bg.png" type="Texture" id=9]
 [ext_resource path="res://assets/life_bar/fill.png" type="Texture" id=10]
 [ext_resource path="res://KOMIKRAK.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://assets/sound/lamer.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/sound/sea-gulls.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/sound/beach01.ogg" type="AudioStream" id=14]
+[ext_resource path="res://a_or_space.tscn" type="PackedScene" id=15]
 
 [sub_resource type="Curve2D" id=1]
 
@@ -35,7 +39,7 @@ extra_spacing_bottom = 5
 font_data = ExtResource( 11 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="Beach" type="Node2D"]
+[node name="Beach" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 __meta__ = {
@@ -55,7 +59,7 @@ texture = ExtResource( 6 )
 [node name="GertrudeTimer" type="Timer" parent="." index="1"]
 
 process_mode = 1
-wait_time = 0.1
+wait_time = 1.0
 one_shot = false
 autostart = false
 
@@ -97,6 +101,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="YSort" type="YSort" parent="." index="4"]
 
+editor/display_folded = true
 position = Vector2( 0, -0.902496 )
 sort_enabled = true
 
@@ -133,7 +138,7 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -32.0
 margin_top = 364.0
-margin_right = 458.0
+margin_right = 530.0
 margin_bottom = 421.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -196,10 +201,87 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
+[node name="seaplayer" type="AudioStreamPlayer" parent="." index="7"]
+
+stream = ExtResource( 12 )
+volume_db = -4.21
+pitch_scale = 1.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+
+[node name="seagullplayer" type="AudioStreamPlayer" parent="." index="8"]
+
+stream = ExtResource( 13 )
+volume_db = -10.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="seagulltimer" type="Timer" parent="." index="9"]
+
+process_mode = 1
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="musicplayer" type="AudioStreamPlayer" parent="." index="10"]
+
+stream = ExtResource( 14 )
+volume_db = -10.0
+pitch_scale = 1.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+
+[node name="gameovertimer" type="Timer" parent="." index="11"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = true
+autostart = false
+
+[node name="gameoverlabel" type="Label" parent="." index="12"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 2.0
+margin_top = 179.0
+margin_right = 648.0
+margin_bottom = 220.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "GAME OVER"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="a_or_space" parent="gameoverlabel" index="0" instance=ExtResource( 15 )]
+
+position = Vector2( 196.79, 51.5978 )
+
 [connection signal="emplacement" from="." to="." method="_on_Beach_emplacement"]
 
 [connection signal="timeout" from="GertrudeTimer" to="." method="_on_GertrudeTimer_timeout"]
 
 [connection signal="area_entered" from="Emplacement" to="." method="_on_Emplacement_area_entered"]
+
+[connection signal="finished" from="seaplayer" to="." method="_on_seaplayer_finished"]
+
+[connection signal="timeout" from="seagulltimer" to="." method="_on_seagulltimer_timeout"]
+
+[connection signal="timeout" from="gameovertimer" to="." method="_on_gameovertimer_timeout"]
 
 

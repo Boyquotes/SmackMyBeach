@@ -12,14 +12,9 @@ func _ready():
 #	var stress = get_tree().get_root().get_node("Player")
 #	print(stress)
 	#print($"../YSort/Player".stressval)
-	s = get_tree().call_group("Player","getStress")
-	print(s)
-	#print($"../YSort/Player".getStress())
-	#$Label2.text = "Score :" + str(stress)
-	
+	s = get_tree().call_group("Player","getStress")	
 	pass
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+
+func _on_Restart_pressed():
+	get_tree().change_scene("res://Beach.tscn")

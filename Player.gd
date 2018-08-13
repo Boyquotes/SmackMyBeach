@@ -8,12 +8,13 @@ var stressval = 0
 
 var can_move = true
 
-enum PlayerState { STATIC, STANDING, STATIC_UP, WALK }
+enum PlayerState { STATIC, STANDING, STATIC_UP, WALK, DISABLED }
 
 var state = PlayerState.STATIC
 
 func _ready():
 	screensize = get_viewport_rect().size
+	$PlayerSpr.play("static")
 
 func _process(delta):
 	motion = Vector2()
@@ -21,17 +22,31 @@ func _process(delta):
 	if Input.is_key_pressed(KEY_ESCAPE):
         get_tree().quit()
 		
+	if state == PlayerState.DISABLED:
+		return
+		
 	var has_moved = false
 	
 	# on traite le kick en premier
-	if state in [PlayerState.WALK, PlayerState.STATIC_UP] and Input.is_action_pressed("kick"):
+	if Input.is_action_pressed("kick") and state in [PlayerState.WALK, PlayerState.STATIC_UP]:
 		if not $kickplayer.playing:
 			$kickplayer.play()
 		has_moved = true
+		attacking = true
+		
 		if $PlayerSpr.animation != "kick":
 			$PlayerSpr.play("kick")
 		else:
-			$PlayerSpr.frame = 0
+			$PlayerSpr.frame = 10
+		
+		if not $kicktimer.is_stopped():
+			$kicktimer.stop()
+			
+		$kicktimer.start()
+		
+		# recherche des ennemis et destruction
+		destroy_ennemies($Tuage.get_overlapping_areas())
+		
 	
 	# traitement des déplacements
 	if not has_moved and state in [PlayerState.WALK, PlayerState.STATIC_UP]:
@@ -55,7 +70,6 @@ func _process(delta):
 			
 		if has_moved:
 			$PlayerSpr.play("walk")
-			
 			if not $footplayer.playing:
 				$footplayer.volume_db = - 15 - randf() * 5
 				$footplayer.pitch_scale = 0.8 + randf() * 0.1
@@ -68,6 +82,7 @@ func _process(delta):
 	elif state  == PlayerState.STATIC:
 		if Input.is_action_pressed("ui_up"):
 			$PlayerSpr.play("standup")
+			$upstandplayer.play()
 			motion.y -= SPEED
 			state = PlayerState.STANDING
 		
@@ -80,23 +95,22 @@ func _process(delta):
 				$StaticTimer.start()
 
 			
-	attacking = motion.length() != 0
+	# attacking = motion.length() != 0
 
 	position += motion * delta
 	position.x = clamp(position.x, 0, screensize.x)
 	position.y = clamp(position.y, 32, screensize.y)
 	move_and_slide(motion)
 	
-	var areas = $EspaceVital.get_overlapping_areas()
 	var ennemies = []
 	var score_ennemis_espace_vital = 0
-	for area in areas:
+	for area in $EspaceVital.get_overlapping_areas():
 		if area.is_in_group("ennemis"):
 			ennemies.push_back(area)
 			score_ennemis_espace_vital += ($"EspaceVital/CollisionShape2D".shape.radius - (area.global_position - global_position).length()) / $"EspaceVital/CollisionShape2D".shape.radius
 	score_ennemis_espace_vital = clamp(score_ennemis_espace_vital, 0, 4) / 4
 	
-	if (!attacking):
+	if not attacking:
 		stressval -= 0.2 * delta
 	stressval += 0.3 * score_ennemis_espace_vital * delta
 	stressval = clamp(stressval, 0, 1)
@@ -105,7 +119,7 @@ func _process(delta):
 	$PlayerSpr.modulate = Color(1.0, 1.0 - score_ennemis_espace_vital, 1.0 - score_ennemis_espace_vital)
 
 func _on_Area2D_area_entered(area):
-	if (attacking):
+	if attacking:
 		area.queue_free()
 		
 func getStress():
@@ -117,8 +131,27 @@ func _on_PlayerSpr_animation_finished():
 	elif $PlayerSpr.animation == "standdown":
 		$PlayerSpr.play("static")
 		state = PlayerState.STATIC
-		
+	
 func _on_StaticTimer_timeout():
 	state = PlayerState.STANDING
 	$PlayerSpr.play("standdown")
+	$downstandplayer.play()
 	
+func _on_kicktimer_timeout():
+	attacking = false
+
+func enable():
+	show()
+	state = PlayerState.STATIC
+		
+func disable():
+	hide()
+	state = PlayerState.DISABLED
+	
+func destroy_ennemies(areas):
+	var has_destroyed = false
+	for area in areas:
+		if area.is_in_group("ennemis"):
+			has_destroyed = true
+			area.free()
+	return has_destroyed
