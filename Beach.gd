@@ -59,15 +59,18 @@ func _on_GertrudeTimer_timeout():
 
 	gertrude_count += 1
 	
-	if gertrude_count % 10 and gertrude_wait > 0.1:
-		gertrude_wait -= 0.05 * gertrude_count / 100
-		$GertrudeTimer.wait_time = gertrude_wait
-	elif gertrude_wait <= 0.1:
-		if gertude_initial > 0.1:
-			gertude_initial -= 0.1
-		gertrude_wait = gertude_initial
-		$GertrudeTimer.wait_time = gertude_initial
-		
+	if gertrude_count % 10:
+		if  gertrude_wait > 0.1:
+			gertrude_wait -= 0.05 * gertrude_count / 100
+			$GertrudeTimer.wait_time = gertrude_wait
+		elif gertrude_wait <= 0.1:
+			if gertude_initial > 0.1:
+				gertude_initial -= 0.1
+			else:
+				gertude_initial = 1
+			gertrude_wait = gertude_initial
+			$GertrudeTimer.wait_time = gertrude_wait
+			
 
 func _on_seaplayer_finished():
 	$seaplayer.play()
