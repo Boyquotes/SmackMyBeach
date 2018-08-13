@@ -39,11 +39,14 @@ func _ready():
 	randomize()
 	var score_file = File.new()
 	if not score_file.file_exists(score_filepath): return
+	# on charge le meilleur score
 	score_file.open(score_filepath, File.READ)
 	best_score = score_file.get_var()
 	score_file.close()
 	$bestscore.text = "BEST\n%s" % best_score
-	#print(best_score)
+	
+	# placement du poste aléatoire
+	#$"$YSort/Poste".set
 	
 	
 

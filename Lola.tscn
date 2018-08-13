@@ -10,6 +10,7 @@ script/source = "extends Area2D
 export (int) var MIN_SPEED
 export (int) var MAX_SPEED
 export (int) var MOVE_SPEED = 150
+export (int) var SCORE = 200
 
 var target= Vector2()
 
@@ -52,11 +53,12 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Lola" index="0" instance=ExtResource( 1 )]
+[node name="Lola" instance=ExtResource( 1 )]
 
 script = SubResource( 1 )
 MIN_SPEED = null
 MAX_SPEED = null
+SCORE = 200
 
 [node name="AnimatedSprite" parent="." index="0"]
 

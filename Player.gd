@@ -14,6 +14,8 @@ enum PlayerState { STATIC, STANDING, STATIC_UP, WALK, DISABLED }
 
 var state = PlayerState.STATIC
 
+signal hit
+
 func _ready():
 	screensize = get_viewport_rect().size
 	$PlayerSpr.play("static")
@@ -123,7 +125,7 @@ func _process(delta):
 
 func _on_Area2D_area_entered(area):
 	if attacking:
-		area.queue_free()
+		destroy_ennemies([area])
 		
 func getStress():
 	return stressval
@@ -156,5 +158,13 @@ func destroy_ennemies(areas):
 	for area in areas:
 		if area.is_in_group("ennemis"):
 			has_destroyed = true
-			area.free()
+			var hit_points = ResourceLoader.load("res://hit_points.tscn")
+			var instance = hit_points.instance()
+			get_parent().add_child(instance)
+			instance.position = Vector2(area.position.x, area.position.y - 50)
+			instance.label.text = "%s" % area.SCORE
+			area.queue_free()
+			get_parent().get_parent().time_score +=  area.SCORE
+			#emit_signal(hit)
+			
 	return has_destroyed

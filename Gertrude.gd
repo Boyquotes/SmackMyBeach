@@ -3,6 +3,7 @@ extends Area2D
 export (int) var MIN_SPEED
 export (int) var MAX_SPEED
 export (int) var MOVE_SPEED = 150
+export (int) var SCORE = 500
 
 var target= Vector2()
 
@@ -30,3 +31,4 @@ func lezarde():
 
 func _on_Visibility_screen_exited():
 	queue_free()
+	
