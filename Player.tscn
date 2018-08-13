@@ -171,7 +171,7 @@ extents = Vector2( 66.2078, 22.8785 )
 custom_solver_bias = 0.0
 radius = 176.268
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Player",
 ]]
 
@@ -258,7 +258,7 @@ bus = "Master"
 [node name="upstandplayer" type="AudioStreamPlayer" parent="." index="7"]
 
 stream = ExtResource( 119 )
-volume_db = -20.0
+volume_db = -10.0
 pitch_scale = 1.0
 autoplay = false
 mix_target = 0
@@ -267,7 +267,7 @@ bus = "Master"
 [node name="downstandplayer" type="AudioStreamPlayer" parent="." index="8"]
 
 stream = ExtResource( 120 )
-volume_db = -20.0
+volume_db = -10.0
 pitch_scale = 1.0
 autoplay = false
 mix_target = 0
