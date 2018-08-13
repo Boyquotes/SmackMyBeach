@@ -26,7 +26,7 @@ bus = "Master"
 
 [node name="a_or_space" parent="." index="2" instance=ExtResource( 4 )]
 
-position = Vector2( 230.837, 406.481 )
+position = Vector2( 198.51, 403.157 )
 
 [node name="tween" type="Tween" parent="." index="3"]
 

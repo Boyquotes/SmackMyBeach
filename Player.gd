@@ -44,9 +44,9 @@ func _process(delta):
 			
 		$kicktimer.start()
 		
-		for area in $Tuage.get_overlapping_areas():
-			if area.is_in_group("ennemis"):
-				area.free()
+		# recherche des ennemis et destruction
+		destroy_ennemies($Tuage.get_overlapping_areas())
+		
 	
 	# traitement des déplacements
 	if not has_moved and state in [PlayerState.WALK, PlayerState.STATIC_UP]:
@@ -102,10 +102,9 @@ func _process(delta):
 	position.y = clamp(position.y, 32, screensize.y)
 	move_and_slide(motion)
 	
-	var areas = $EspaceVital.get_overlapping_areas()
 	var ennemies = []
 	var score_ennemis_espace_vital = 0
-	for area in areas:
+	for area in $EspaceVital.get_overlapping_areas():
 		if area.is_in_group("ennemis"):
 			ennemies.push_back(area)
 			score_ennemis_espace_vital += ($"EspaceVital/CollisionShape2D".shape.radius - (area.global_position - global_position).length()) / $"EspaceVital/CollisionShape2D".shape.radius
@@ -121,7 +120,6 @@ func _process(delta):
 
 func _on_Area2D_area_entered(area):
 	if attacking:
-		# print("pan")
 		area.queue_free()
 		
 func getStress():
@@ -149,3 +147,11 @@ func enable():
 func disable():
 	hide()
 	state = PlayerState.DISABLED
+	
+func destroy_ennemies(areas):
+	var has_destroyed = false
+	for area in areas:
+		if area.is_in_group("ennemis"):
+			has_destroyed = true
+			area.free()
+	return has_destroyed
