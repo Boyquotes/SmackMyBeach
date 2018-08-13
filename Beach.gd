@@ -21,6 +21,7 @@ var initial_time
 
 var gertrude_count = 0
 var gertrude_wait = 1
+var gertude_initial = 1
 
 enum BeachState { RUNNING, GAME_OVER }
 
@@ -61,6 +62,12 @@ func _on_GertrudeTimer_timeout():
 	if gertrude_count % 10 and gertrude_wait > 0.1:
 		gertrude_wait -= 0.05 * gertrude_count / 100
 		$GertrudeTimer.wait_time = gertrude_wait
+	elif gertrude_wait <= 0.1:
+		if gertude_initial > 0.1:
+			gertude_initial -= 0.1
+		gertrude_wait = gertude_initial
+		$GertrudeTimer.wait_time = gertude_initial
+		
 
 func _on_seaplayer_finished():
 	$seaplayer.play()
