@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
@@ -32,6 +32,16 @@ extents = Vector2( 32.8755, 33.3961 )
 [sub_resource type="DynamicFont" id=3]
 
 size = 33
+use_mipmaps = false
+use_filter = false
+extra_spacing_top = -10
+extra_spacing_bottom = 5
+font_data = ExtResource( 11 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=4]
+
+size = 16
 use_mipmaps = false
 use_filter = false
 extra_spacing_top = -10
@@ -101,7 +111,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="YSort" type="YSort" parent="." index="4"]
 
-editor/display_folded = true
 position = Vector2( 0, -0.902496 )
 sort_enabled = true
 
@@ -132,6 +141,7 @@ polygon = PoolVector2Array( 0, 352, 168.028, 367.42, 287.158, 373.738, 412.606, 
 
 [node name="header" type="HBoxContainer" parent="." index="6"]
 
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -201,7 +211,33 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="seaplayer" type="AudioStreamPlayer" parent="." index="7"]
+[node name="bestscore" type="Label" parent="." index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 456.0
+margin_top = -8.0
+margin_right = 632.0
+margin_bottom = 77.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+text = "BEST
+20000"
+align = 2
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="seaplayer" type="AudioStreamPlayer" parent="." index="8"]
 
 stream = ExtResource( 12 )
 volume_db = -4.21
@@ -210,7 +246,7 @@ autoplay = true
 mix_target = 0
 bus = "Master"
 
-[node name="seagullplayer" type="AudioStreamPlayer" parent="." index="8"]
+[node name="seagullplayer" type="AudioStreamPlayer" parent="." index="9"]
 
 stream = ExtResource( 13 )
 volume_db = -10.0
@@ -219,30 +255,30 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="seagulltimer" type="Timer" parent="." index="9"]
+[node name="seagulltimer" type="Timer" parent="." index="10"]
 
 process_mode = 1
 wait_time = 30.0
 one_shot = true
 autostart = true
 
-[node name="musicplayer" type="AudioStreamPlayer" parent="." index="10"]
+[node name="musicplayer" type="AudioStreamPlayer" parent="." index="11"]
 
 stream = ExtResource( 14 )
 volume_db = -10.0
 pitch_scale = 1.0
-autoplay = true
+autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="gameovertimer" type="Timer" parent="." index="11"]
+[node name="gameovertimer" type="Timer" parent="." index="12"]
 
 process_mode = 1
 wait_time = 5.0
 one_shot = true
 autostart = false
 
-[node name="gameoverlabel" type="Label" parent="." index="12"]
+[node name="gameoverlabel" type="Label" parent="." index="13"]
 
 visible = false
 anchor_left = 0.0

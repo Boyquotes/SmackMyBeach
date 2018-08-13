@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+export var ignore_input = false
+
 var motion = Vector2()
 const SPEED = 130
 var screensize
@@ -22,7 +24,7 @@ func _process(delta):
 	if Input.is_key_pressed(KEY_ESCAPE):
         get_tree().quit()
 		
-	if state == PlayerState.DISABLED:
+	if state == PlayerState.DISABLED or ignore_input:
 		return
 		
 	var has_moved = false
@@ -37,6 +39,7 @@ func _process(delta):
 		if $PlayerSpr.animation != "kick":
 			$PlayerSpr.play("kick")
 		else:
+			# si on kick déjà, on skip le début  de l'anim : feedback plus rapide
 			$PlayerSpr.frame = 10
 		
 		if not $kicktimer.is_stopped():
