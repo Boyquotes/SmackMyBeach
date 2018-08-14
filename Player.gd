@@ -156,15 +156,41 @@ func disable():
 func destroy_ennemies(areas):
 	var has_destroyed = false
 	for area in areas:
-		if area.is_in_group("ennemis"):
+		if not area.is_in_group("ennemis"):
+			continue
+			
+		
+		var tween = area.get_node("tween")
+		
+		if not tween:
+			tween = Tween.new()
+			tween.name = "tween"
+			tween.repeat = false
+			area.add_child(tween)
+			
+		if not tween.is_active():
+			# on instancie la scène de hit
+			# pour le moment, il y a les points, mais on pourrait rajouter du feedback
 			has_destroyed = true
 			var hit_points = ResourceLoader.load("res://hit_points.tscn")
 			var instance = hit_points.instance()
 			get_parent().add_child(instance)
 			instance.position = Vector2(area.position.x, area.position.y - 50)
 			instance.label.text = "%s" % area.SCORE
-			area.queue_free()
-			get_parent().get_parent().time_score +=  area.SCORE
-			#emit_signal(hit)
+			instance.animate()
+		
+		# on fabrique une coordonnée pour éjecter l'objet de l'écran
+		# et qui s'autodétuira à cause du callback de visibilité sur celui-ci	
+		var dx = 0
+		if $PlayerSpr.flip_h:
+			dx = - area.position.x - 100
+		else:
+			dx = screensize.x - area.position.x + 100
+		tween.interpolate_property(area, "position", area.position, area.position + Vector2(dx, 0), 1.0, Tween.TRANS_EXPO, Tween.EASE_OUT)
+		tween.start()
 			
+		# TODO : bouh pas beau ! refactor avec un signal !
+		get_parent().get_parent().time_score +=  area.SCORE
+		#emit_signal(hit)
+		
 	return has_destroyed
