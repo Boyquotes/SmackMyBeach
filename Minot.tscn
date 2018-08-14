@@ -19,9 +19,18 @@ animations = [ {
 
 [node name="Minot" instance=ExtResource( 1 )]
 
+SCORE = 500
+
 [node name="AnimatedSprite" parent="." index="0"]
 
 position = Vector2( 20.2458, 32.1292 )
 frames = SubResource( 1 )
+
+[node name="timer" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = false
+autostart = false
 
 

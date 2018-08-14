@@ -3,6 +3,8 @@ extends Area2D
 export (int) var MIN_SPEED
 export (int) var MAX_SPEED
 export (int) var MOVE_SPEED = 75
+export (int) var SCORE = 1000
+
 var aleatoire
 
 func _ready():

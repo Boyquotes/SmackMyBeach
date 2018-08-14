@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+export var ignore_input = false
+
 var motion = Vector2()
 const SPEED = 130
 var screensize
@@ -12,6 +14,8 @@ enum PlayerState { STATIC, STANDING, STATIC_UP, WALK, DISABLED }
 
 var state = PlayerState.STATIC
 
+signal hit
+
 func _ready():
 	screensize = get_viewport_rect().size
 	$PlayerSpr.play("static")
@@ -22,7 +26,7 @@ func _process(delta):
 	if Input.is_key_pressed(KEY_ESCAPE):
         get_tree().quit()
 		
-	if state == PlayerState.DISABLED:
+	if state == PlayerState.DISABLED or ignore_input:
 		return
 		
 	var has_moved = false
@@ -37,6 +41,7 @@ func _process(delta):
 		if $PlayerSpr.animation != "kick":
 			$PlayerSpr.play("kick")
 		else:
+			# si on kick déjà, on skip le début  de l'anim : feedback plus rapide
 			$PlayerSpr.frame = 10
 		
 		if not $kicktimer.is_stopped():
@@ -120,7 +125,7 @@ func _process(delta):
 
 func _on_Area2D_area_entered(area):
 	if attacking:
-		area.queue_free()
+		destroy_ennemies([area])
 		
 func getStress():
 	return stressval
@@ -153,5 +158,13 @@ func destroy_ennemies(areas):
 	for area in areas:
 		if area.is_in_group("ennemis"):
 			has_destroyed = true
-			area.free()
+			var hit_points = ResourceLoader.load("res://hit_points.tscn")
+			var instance = hit_points.instance()
+			get_parent().add_child(instance)
+			instance.position = Vector2(area.position.x, area.position.y - 50)
+			instance.label.text = "%s" % area.SCORE
+			area.queue_free()
+			get_parent().get_parent().time_score +=  area.SCORE
+			#emit_signal(hit)
+			
 	return has_destroyed
