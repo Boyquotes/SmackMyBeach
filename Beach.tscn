@@ -1,20 +1,21 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Beach.gd" type="Script" id=1]
 [ext_resource path="res://Gertrude.tscn" type="PackedScene" id=2]
 [ext_resource path="res://LaMouette.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Minot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Lola.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/beach.png" type="Texture" id=6]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Poste.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/life_bar/bg.png" type="Texture" id=9]
-[ext_resource path="res://assets/life_bar/fill.png" type="Texture" id=10]
-[ext_resource path="res://KOMIKRAK.ttf" type="DynamicFontData" id=11]
-[ext_resource path="res://assets/sound/lamer.ogg" type="AudioStream" id=12]
-[ext_resource path="res://assets/sound/sea-gulls.ogg" type="AudioStream" id=13]
-[ext_resource path="res://assets/sound/beach01.ogg" type="AudioStream" id=14]
-[ext_resource path="res://a_or_space.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Bertrand.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/beach.png" type="Texture" id=7]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Poste.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/life_bar/bg.png" type="Texture" id=10]
+[ext_resource path="res://assets/life_bar/fill.png" type="Texture" id=11]
+[ext_resource path="res://KOMIKRAK.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://assets/sound/lamer.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/sound/sea-gulls.ogg" type="AudioStream" id=14]
+[ext_resource path="res://assets/sound/beach01.ogg" type="AudioStream" id=15]
+[ext_resource path="res://a_or_space.tscn" type="PackedScene" id=16]
 
 [sub_resource type="Curve2D" id=1]
 
@@ -36,7 +37,7 @@ use_mipmaps = false
 use_filter = false
 extra_spacing_top = -10
 extra_spacing_bottom = 5
-font_data = ExtResource( 11 )
+font_data = ExtResource( 12 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=4]
@@ -46,10 +47,10 @@ use_mipmaps = false
 use_filter = false
 extra_spacing_top = -10
 extra_spacing_bottom = 5
-font_data = ExtResource( 11 )
+font_data = ExtResource( 12 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="Beach" type="Node2D"]
+[node name="Beach" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 __meta__ = {
@@ -60,11 +61,12 @@ Gertrude = ExtResource( 2 )
 LaMouette = ExtResource( 3 )
 Minot = ExtResource( 4 )
 Lola = ExtResource( 5 )
+Bertrand = ExtResource( 6 )
 
 [node name="Playa" type="Sprite" parent="." index="0"]
 
 position = Vector2( 320.222, 240.089 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 
 [node name="GertrudeTimer" type="Timer" parent="." index="1"]
 
@@ -112,11 +114,11 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( 0, -0.902496 )
 sort_enabled = true
 
-[node name="Player" parent="YSort" index="0" instance=ExtResource( 7 )]
+[node name="Player" parent="YSort" index="0" instance=ExtResource( 8 )]
 
 position = Vector2( 305, 293 )
 
-[node name="Poste" parent="YSort" index="1" instance=ExtResource( 8 )]
+[node name="Poste" parent="YSort" index="1" instance=ExtResource( 9 )]
 
 position = Vector2( 373.576, 216.866 )
 scale = Vector2( 0.545355, 0.545355 )
@@ -177,9 +179,9 @@ page = 0.0
 value = 0.0
 exp_edit = false
 rounded = false
-texture_under = ExtResource( 9 )
+texture_under = ExtResource( 10 )
 texture_over = null
-texture_progress = ExtResource( 10 )
+texture_progress = ExtResource( 11 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
@@ -237,7 +239,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="seaplayer" type="AudioStreamPlayer" parent="." index="8"]
 
-stream = ExtResource( 12 )
+stream = ExtResource( 13 )
 volume_db = -4.21
 pitch_scale = 1.0
 autoplay = true
@@ -246,7 +248,7 @@ bus = "Master"
 
 [node name="seagullplayer" type="AudioStreamPlayer" parent="." index="9"]
 
-stream = ExtResource( 13 )
+stream = ExtResource( 14 )
 volume_db = -10.0
 pitch_scale = 1.0
 autoplay = false
@@ -258,11 +260,11 @@ bus = "Master"
 process_mode = 1
 wait_time = 30.0
 one_shot = true
-autostart = true
+autostart = false
 
 [node name="musicplayer" type="AudioStreamPlayer" parent="." index="11"]
 
-stream = ExtResource( 14 )
+stream = ExtResource( 15 )
 volume_db = -10.0
 pitch_scale = 1.0
 autoplay = false
@@ -302,7 +304,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="a_or_space" parent="gameoverlabel" index="0" instance=ExtResource( 15 )]
+[node name="a_or_space" parent="gameoverlabel" index="0" instance=ExtResource( 16 )]
 
 position = Vector2( 196.79, 51.5978 )
 

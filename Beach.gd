@@ -4,6 +4,8 @@ export (PackedScene) var Gertrude
 export (PackedScene) var LaMouette
 export (PackedScene) var Minot
 export (PackedScene) var Lola
+export (PackedScene) var Bertrand
+
 #export (PackedScene) var Poissons
 #export (PackedScene) var Requin
 
@@ -76,9 +78,9 @@ func _process(delta):
 			file.close()
 
 func _on_GertrudeTimer_timeout():
-	var array = [LaMouette, Gertrude, Minot, Lola]
+	var array = [LaMouette, Gertrude, Minot, Lola, Bertrand, Bertrand]
 	#La femme maillot rouge
-	var gertrude = array[randi() % 4].instance()
+	var gertrude = array[randi() % array.size()].instance()
 	$"GertrudePath/GertrudeSpawnLocation".unit_offset = randf()
 	gertrude.position = $"GertrudePath/GertrudeSpawnLocation".global_position
 	$YSort.add_child(gertrude)
@@ -105,8 +107,8 @@ func _on_seaplayer_finished():
 	$seaplayer.play()
 
 func _on_seagulltimer_timeout():
-	# print("_on_seagulltimer_timeout")
-	$seagullplayer.play()
+	print("_on_seagulltimer_timeout")
+	# $seagullplayer.play()
 	$seagulltimer.wait_time = 110 + randf() * 30
 	$seagulltimer.start()
 
